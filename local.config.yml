@@ -72,8 +72,8 @@ datasets:
         search_path:
           - ${NWIS_SCHEMA_NAME}
           - 'public'
-      id_field: monitoring_location_id
-      table: "(select monitoring_location_id, geom,
+      id_field: monitoring_location_identifier
+      table: "(select monitoring_location_identifier, geom,
                agency, site_identification_number, site_name, site_type,
                district, state, county, country,
                altitude_of_guage_land_surface, method_altitude_determined,
@@ -83,8 +83,8 @@ datasets:
                country_cd || ':' || state_cd as state_fips,
                country_cd || ':' || state_cd || ':' || county_cd as county_fips,
                country_cd as country_fips,
-               subbasin_hydrologic_unit,
-               'https://waterdata.usgs.gov/monitoring-location/' || site_identification_number as monitoring_location_url
+               calculated_huc_12,
+               'https://waterdata.usgs.gov/monitoring-location/' || site_identification_number || '/' as monitoring_location_url
                from monitoring_location) as monitoring_location"
       column_property_mapping: {
         'agency' : 'agency',
@@ -110,6 +110,6 @@ datasets:
         'state_fips' : 'stateFIPS',
         'county_fips' : 'countyFIPS',
         'country_fips' : 'countryFIPS',
-        'subbasin_hydrologic_unit' : 'hydrologicUnit',
+        'calculated_huc_12' : 'hydrologicUnit',
         'monitoring_location_url' : 'monitoringLocationUrl'
       }
